@@ -1,0 +1,9 @@
+node_modules/
+build/
+
+# exclude everything 
+public/*
+# exception to the rule 
+!public/.gitkeep 
+
+.env
