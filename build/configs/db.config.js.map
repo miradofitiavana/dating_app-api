@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/configs/db.config.js"],"names":["module","exports","url","process","env","DB_URL"],"mappings":";;AAAAA,MAAM,CAACC,OAAP,GAAiB;AACbC,EAAAA,GAAG,EAAEC,OAAO,CAACC,GAAR,CAAYC;AADJ,CAAjB","sourcesContent":["module.exports = {\r\n    url: process.env.DB_URL,\r\n}"],"file":"db.config.js"}
