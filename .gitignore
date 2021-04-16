@@ -1,5 +1,4 @@
 node_modules/
-build/
 
 # exclude everything 
 public/*
