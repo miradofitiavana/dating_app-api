@@ -6,8 +6,8 @@ public/*
 !public/.gitkeep 
 
 # exclude everything 
-# build/*
-# # exception to the rule 
-# !build/.gitkeep 
+build/*
+# exception to the rule 
+!build/.gitkeep 
 
 .env
