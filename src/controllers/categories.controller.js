@@ -7,7 +7,7 @@ exports.create = (req, res) => {
     });
 
     category.save().then(data => {
-        res.send({
+        res.status(201).send({
             data: data
         });
     }).catch((err) => {
@@ -55,7 +55,7 @@ exports.read = (req, res) => {
     Category.findById(req.params.id)
         .then((data) => {
             console.log(data);
-            res.send({
+            res.status(200).send({
                 data: data
             });
         })
@@ -63,15 +63,19 @@ exports.read = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    Category.findByIdAndUpdate(req.params.id, req.body)
-        .then((data) => {
-            console.log(data);
-            Category.findById(req.params.id).then(response => {
-                res.send({
-                    data: response
-                });
-            })
-                .catch(err2 => console.log(err2))
+    Category.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true, useFindAndModify: false }
+    )
+        .then((response) => {
+            return res.status(202).send({
+                data: response
+            });
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            return res.status(500).send({
+                message: err || "Some error occured"
+            });
+        })
 }

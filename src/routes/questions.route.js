@@ -6,8 +6,8 @@ const questions = require('./../controllers/questions.controller');
 router.post('/questions', questions.create);
 router.get('/questions', questions.list);
 // router.delete('/categorie/:id', categories.delete);
-// router.get('/categorie/:id', categories.read);
-// router.put('/categorie/:id', categories.update);
+router.get('/question/:id', questions.read);
+router.put('/question/:id', questions.update);
 router.get('/question-random', questions.random);
 
 router.put('/question-update', questions.updateQuestion);

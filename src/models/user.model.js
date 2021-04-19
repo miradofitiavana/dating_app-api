@@ -40,7 +40,7 @@ const userSchema = new Schema(
                 type: new mongoose.Schema({
                     _id: false,
                     question: { type: Schema.Types.ObjectId, ref: 'Question' },
-                    vote: ['L', 'D']
+                    vote: String
                 }, { timestamps: true })
             }
         ],

@@ -13,4 +13,5 @@ exports.dbConnect = () => {
         console.log("could not connect to the database", err)
         process.exit();
     });
+    // mongoose.set('debug', true);
 }
