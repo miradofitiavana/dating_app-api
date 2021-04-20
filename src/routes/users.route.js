@@ -7,10 +7,11 @@ const users = require('./../controllers/users.controller');
 // const verifyToken = require('./../middlewares/verifyToken');
 import verifyToken from "../middlewares/verifyToken";
 
-router.get('/user', users.getMe);
+// router.get('/user', users.getMe);
 // router.get('/logout', users.logout);
-// router.get('/user/:id', verifyToken, users.getMe);
-// router.put('/user/:id', verifyToken, users.updateMe);
+router.get('/user/:id', users.getMe);
+router.put('/user/:id', users.updateMe);
+router.put('/user-preferences/:id', users.updatePrefs);
 router.get('/user-suggestions', users.getSuggestions);
 /** swip */
 router.post('/user-match', users.match);

@@ -201,7 +201,15 @@ exports.random = (req, res) => {
             let answered = user.answered.map((u) => u.value);
             Question.countDocuments().exec(function (err, count) {
                 var random = Math.floor(Math.random() * (count - answered.length));
-                Question.findOne({ "_id": { "$nin": answered } })
+                console.log(random);
+                Question.findOne(
+                    {
+                        "_id": { "$nin": answered },
+                        $or: [
+                            { like: { $exists: true, $type: 'array', $ne: [] } },
+                            { dislike: { $exists: true, $type: 'array', $ne: [] } }
+                        ]
+                    })
                     .skip(random)
                     .populate("categories")
                     .then((data) => {
@@ -254,7 +262,7 @@ exports.add = (req, res) => {
                 "answer": "Non.",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Tu écoutes plutôt?",
@@ -267,7 +275,7 @@ exports.add = (req, res) => {
                 "answer": "Ta tête",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Pour toi le sport c'est ?",
@@ -280,7 +288,7 @@ exports.add = (req, res) => {
                 "answer": "Un plaisir",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Aimes-tu le sport ?",
@@ -293,7 +301,7 @@ exports.add = (req, res) => {
                 "answer": "Non",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Aimes-tu l'adrénaline ?",
@@ -306,7 +314,7 @@ exports.add = (req, res) => {
                 "answer": "Non, j'évite quand c'est dangereux.",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Le meilleur combo devant un match ?",
@@ -319,7 +327,7 @@ exports.add = (req, res) => {
                 "answer": "Kebab/Ice Tea",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "On t'invite à regarder un match pour un premier rendez-vous...",
@@ -332,7 +340,7 @@ exports.add = (req, res) => {
                 "answer": "Non merci, on se verra quand ce sera terminé",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Combien de temps voudrais-tu que dure ta prochaine relation?",
@@ -345,7 +353,7 @@ exports.add = (req, res) => {
                 "answer": "Le plus longtemps possible",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "En prévision d'une soirée Netflix & Sucreries, quelle glace achètes-tu ?",
@@ -358,7 +366,7 @@ exports.add = (req, res) => {
                 "answer": "Häagen-Dazs",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Le meilleur goût du Kinder",
@@ -371,7 +379,7 @@ exports.add = (req, res) => {
                 "answer": "White",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Au petit déjeuner, que préfères-tu ?",
@@ -384,7 +392,7 @@ exports.add = (req, res) => {
                 "answer": "Miel Pops",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Quelle est la marque de sport qui t'inspire le plus ?",
@@ -397,7 +405,7 @@ exports.add = (req, res) => {
                 "answer": "Nike",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Coca ou Ice Tea ?",
@@ -410,7 +418,7 @@ exports.add = (req, res) => {
                 "answer": "Ice Tea",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         },
         {
             "question": "Quelle console choisis-tu ?",
@@ -423,7 +431,7 @@ exports.add = (req, res) => {
                 "answer": "Xbox",
                 "users": []
             },
-            "author": "607c5b05bdbaec626c3e2f06"
+            "author": "607f0b437516233534481ecf"
         }
     ];
     temp.map(a => {

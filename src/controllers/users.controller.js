@@ -18,6 +18,58 @@ exports.getMe = (req, res, next) => {
         })
 }
 
+exports.updatePrefs = (req, res) => {
+    const id = req.params.id;
+    const user = {
+        showMe: req.body.showMe,
+        ageFrom: req.body.ageFrom,
+        ageTo: req.body.ageTo
+    };
+
+    User.findByIdAndUpdate(id, user,
+        { new: true, useFindAndModify: false }
+    )
+        .then(response => {
+            res.status(200).send({
+                message: "user updated",
+                data: response
+            })
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occured"
+            })
+        });
+}
+
+exports.updateMe = (req, res) => {
+    const id = req.params.id;
+    const user = {
+        firstname: req.body.firstname,
+        // gender: req.body.gender,
+        birthday: req.body.birthday,
+        location: req.body.location,
+        email: req.body.email,
+        isAdmin: req.body.isAdmin,
+    };
+
+    User.findByIdAndUpdate(id, user,
+        { new: true, useFindAndModify: false }
+    )
+        .then(response => {
+            res.status(200).send({
+                message: "user updated",
+                data: response
+            })
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occured"
+            })
+        });
+}
+
+
 exports.getQuestionsAVoter = (req, res, next) => {
     let token = req.headers.authorization;
     var decoded = jwt.decode(token);
@@ -151,9 +203,22 @@ exports.getSuggestions = (req, res, next) => {
         let rejected = data.rejected.map((a) => a.user);
         let liked = (data.liked.map((a) => a.user)).concat(rejected);
         liked.push(decoded.id);
+
+        let gender = data.showMe == 0 ? { $in: [-1, 1] } : data.showMe;
+        let birthFrom = new Date();
+        birthFrom.setFullYear(birthFrom.getFullYear() - data.ageFrom);
+        let birthTo = new Date();
+        birthTo.setFullYear(birthTo.getFullYear() - data.ageTo);
+
+        console.log(data.birthday);
+        console.log(birthFrom);
+        console.log(birthTo);
+
         User.find({
             answered: { "$in": questions },
-            _id: { $nin: liked }
+            _id: { $nin: liked },
+            gender: gender,
+            birthday: { $lte: birthFrom, $gte: birthTo }
         }, 'answered photo firstname birthday _id')
             .then((reponse) => {
                 var percentage = (questions, nombre) => (nombre * 100) / questions.length;

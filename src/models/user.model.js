@@ -66,6 +66,10 @@ const userSchema = new Schema(
                 user: { type: Schema.Types.ObjectId, ref: 'User' },
             }, { timestamps: true })
         }],
+
+        showMe: Number,
+        ageFrom: Number,
+        ageTo: Number
     },
     {
         timestamps: true

@@ -117,6 +117,9 @@ exports.register = (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         isAdmin: req.body.isAdmin,
+        ageFrom: 18,
+        ageTo: 99,
+        showMe: 0
     });
 
     user.save().then(response => {
