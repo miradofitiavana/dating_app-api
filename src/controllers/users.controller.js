@@ -4,6 +4,27 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('./../configs');
 
+exports.list = (req, res, next) => {
+    var fields = req.query.fields?.split(",") || [];
+    let filter = {};
+    if (req.query.admin) filter.isAdmin = req.query.admin;
+    User.find(
+        filter,
+        fields.join(' ')
+    )
+        .then(data => {
+            console.log(data);
+            return res.status(200).send({
+                data: data
+            })
+        })
+        .catch((err) => {
+            return res.status(500).send({
+                message: err.message || "Some error occured"
+            })
+        })
+}
+
 exports.getMe = (req, res, next) => {
     let token = req.headers.authorization;
     var decoded = jwt.decode(token);
@@ -51,6 +72,7 @@ exports.updateMe = (req, res) => {
         location: req.body.location,
         email: req.body.email,
         isAdmin: req.body.isAdmin,
+        confidential: req.body.confidential,
     };
 
     User.findByIdAndUpdate(id, user,
@@ -133,10 +155,11 @@ exports.getLikedMe = (req, res, next) => {
         .populate('rejected.user', 'photo firstname birthday')
         .then((re) => {
             let liked = re.liked.map(el => el.user._id);
-            let rejected = re.rejected.map((a) => a.user_id);
+            console.log(re.rejected);
+            let rejected = re.rejected.map((a) => a.user._id);
 
             let all = liked.concat(rejected);
-
+            console.log(all);
             let retour = [];
 
             re.likedme.forEach((element) => {
@@ -168,6 +191,20 @@ exports.reject = (req, res) => {
                 message: err.message || "Some error occured"
             })
         });
+}
+
+exports.getMatch = (req, res) => {
+    let token = req.headers.authorization;
+    var id = req.params.id;
+    User.findById(id)
+        .then((re) => {
+            res.send({
+                data: re
+            });
+        })
+        .catch(e => {
+            console.log(e);
+        })
 }
 
 exports.match = (req, res) => {

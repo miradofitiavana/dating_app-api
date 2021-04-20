@@ -69,7 +69,8 @@ const userSchema = new Schema(
 
         showMe: Number,
         ageFrom: Number,
-        ageTo: Number
+        ageTo: Number,
+        confidential: String
     },
     {
         timestamps: true

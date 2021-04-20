@@ -119,7 +119,8 @@ exports.register = (req, res) => {
         isAdmin: req.body.isAdmin,
         ageFrom: 18,
         ageTo: 99,
-        showMe: 0
+        showMe: 0,
+        confidential: ''
     });
 
     user.save().then(response => {
